@@ -1,0 +1,96 @@
+{
+  "name": "CarsaiBot",
+  "version": "1.0.0",
+  "description": "Bot modular e profissional para WhatsApp, desenvolvido com a versão mais recente do Baileys. Parte do ecossistema CarsaiMz, fornece automação avançada, gestão de grupos e uma arquitetura escalável para desenvolvedores e empreendedores em Moçambique e além.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@whiskeysockets/baileys": "^7.0.0-rc.9",
+    "chalk": "4.1.2",
+    "fluent-ffmpeg": "^2.1.3",
+    "moment-timezone": "^0.6.0",
+    "node-fetch": "2.6.7",
+    "pino": "^9.0.0",
+    "qrcode-terminal": "^0.12.0",
+    "express": "^5.1.0",
+    "readline": "^1.3.0",
+    "yt-search": "latest",
+    "rsnchat": "latest",
+    "ab-downloader": "latest"
+  },
+  "author": {
+    "name": "CarsaiDev",
+    "email": "carsaideveloper@gmail.com",
+    "url": "https://carsaimz.site",
+    "role": "Organização de Desenvolvimento e Soluções Digitais"
+  },
+  "contributors": [
+    {
+      "name": "Carsai Community",
+      "email": "suporte.carsaimz@gmail.com"
+    }
+  ],
+  "license": "ISC",
+  "keywords": [
+    "whatsapp-bot",
+    "baileys",
+    "automation",
+    "carsai",
+    "mozambique",
+    "modular-bot",
+    "carsaibot",
+    "carsaidev",
+    "carsaimz",
+    "nodejs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carsaimz/CarsaiBot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/carsaimz/CarsaiBot/issues",
+    "email": "suporte.carsaimz@gmail.com"
+  },
+  "homepage": "https://carsaimz.site/projects/",
+  "organization": {
+    "name": "CarsaiMz",
+    "description": "Organização moçambicana focada em democratizar o acesso à tecnologia através de desenvolvimento web, hospedagem acessível, educação digital (Carsai LMS) e soluções de negócios (Carsai BMS).",
+    "url": "https://carsaimz.site",
+    "location": "Moçambique",
+    "platforms": [
+      {
+        "name": "CarsaiDev",
+        "url": "https://carsaidev.linkpc.net",
+        "description": "Desenvolvimento Web & Programação Sob Encomenda"
+      },
+      {
+        "name": "Carsai LMS",
+        "url": "https://carsailms.linkpc.net",
+        "description": "Sistema de Gestão de Aprendizagem para Cursos Online"
+      },
+      {
+        "name": "Carsai Host",
+        "url": "https://carsaihost.linkpc.net",
+        "description": "Plataforma de Hospedagem Web Acessível"
+      },
+      {
+        "name": "Carsai BMS",
+        "url": "https://carsaibms.linkpc.net",
+        "description": "Sistema de Gestão de Negócios"
+      },
+      {
+        "name": "CarsaiDev App",
+        "description": "Aplicativo Android nativo para acesso ao ecossistema Carsai"
+      }
+    ]
+  },
+  "bot": {
+    "official_contact": "+258862414345",
+    "whatsapp_link": "https://wa.me/258862414345",
+    "purpose": "Automação profissional para WhatsApp com foco em modularidade, performance e facilidade de manutenção."
+  }
+}
