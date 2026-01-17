@@ -63,8 +63,8 @@ module.exports = {
 ```
 O sistema automaticamente:
 
-· Registra o comando para ser acionado com ${config.prefixo}nomecomando.
-· Inclui o comando e sua descrição na listagem gerada pelo ${config.prefixo}menu.
+- Registra o comando para ser acionado com ${config.prefixo}nomecomando.
+- Inclui o comando e sua descrição na listagem gerada pelo *${config.prefixo}menu*.
 
 
 ## 👨‍💻 Sobre o Desenvolvedor & a Organização
