@@ -1,14 +1,14 @@
 {
   "name": "CarsaiBot",
   "version": "2.0.0",
-  "description": "Bot modular e profissional para WhatsApp, desenvolvido com a versão mais recente do Baileys. Parte do ecossistema CarsaiMz, fornece automação avançada, gestão de grupos e uma arquitetura escalável para desenvolvedores e empreendedores em Moçambique e além.",
+  "description": "Modular and professional WhatsApp bot, developed with the latest version of Baileys. Part of the CarsaiMz ecosystem, it provides advanced automation, group management, and a scalable architecture for developers and entrepreneurs in Mozambique and beyond. cbot / carsai",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js",
     "test": "echo \"No test specified\" && exit 0",
     "update": "npm update",
-    "postinstall": "echo '✅ Dependências instaladas! Configure suas API Keys em configuracao.js'"
+    "postinstall": "echo '✅ Dependencies installed! Configure your API Keys in configuration.js'"
   },
   "dependencies": {
     "@hapi/boom": "^10.0.1",
@@ -24,15 +24,13 @@
     "pino": "^9.0.0",
     "qrcode": "^1.5.3",
     "qrcode-terminal": "^0.12.0",
-    "express": "^5.1.0",
     "readline": "^1.3.0",
     "yt-search": "^2.10.3",
     "ytdl-core": "^4.11.5",
-    "ab-downloader": "^1.0.3",
+    "ab-downloader": "^1.0.1",
     "os": "^0.1.2",
     "fs": "^0.0.1-security",
-    "path": "^0.12.7",
-    "wa-sticker-formatter": "^4.3.2"
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "@types/node": "^22.10.6",
@@ -46,7 +44,7 @@
     "name": "CarsaiDev",
     "email": "carsaideveloper@gmail.com",
     "url": "https://carsaimz.site",
-    "role": "Organização de Desenvolvimento e Soluções Digitais"
+    "role": "Development Organization and Digital Solutions"
   },
   "contributors": [
     {
@@ -67,7 +65,8 @@
     "carsaimz",
     "nodejs",
     "100-commands",
-    "advanced-bot"
+    "advanced-bot",
+    "cbot"
   ],
   "repository": {
     "type": "git",
@@ -80,57 +79,57 @@
   "homepage": "https://carsaimz.site/projects/",
   "organization": {
     "name": "CarsaiMz",
-    "description": "Organização moçambicana focada em democratizar o acesso à tecnologia através de desenvolvimento web, hospedagem acessível, educação digital (Carsai LMS) e soluções de negócios (Carsai BMS).",
+    "description": "Mozambican organization focused on democratizing access to technology through web development, affordable hosting, digital education (Carsai LMS), and business solutions (Carsai BMS).",
     "url": "https://carsaimz.site",
-    "location": "Moçambique",
+    "location": "Mozambique",
     "platforms": [
       {
         "name": "CarsaiDev",
         "url": "https://carsaidev.linkpc.net",
-        "description": "Desenvolvimento Web & Programação Sob Encomenda"
+        "description": "Web Development & Custom Programming"
       },
       {
         "name": "Carsai LMS",
         "url": "https://carsailms.linkpc.net",
-        "description": "Sistema de Gestão de Aprendizagem para Cursos Online"
+        "description": "Learning Management System for Online Courses"
       },
       {
         "name": "Carsai Host",
         "url": "https://carsaihost.linkpc.net",
-        "description": "Plataforma de Hospedagem Web Acessível"
+        "description": "Affordable Web Hosting Platform"
       },
       {
         "name": "Carsai BMS",
         "url": "https://carsaibms.linkpc.net",
-        "description": "Sistema de Gestão de Negócios"
+        "description": "Business Management System"
       },
       {
         "name": "CarsaiDev App",
-        "description": "Aplicativo Android nativo para acesso ao ecossistema Carsai"
+        "description": "Native Android app for accessing the Carsai ecosystem"
       }
     ]
   },
   "bot": {
     "official_contact": "+258862414345",
     "whatsapp_link": "https://wa.me/258862414345",
-    "purpose": "Automação profissional para WhatsApp com foco em modularidade, performance e facilidade de manutenção.",
+    "purpose": "Professional WhatsApp automation with a focus on modularity, performance, and ease of maintenance. CarsaiBot / cbot",
     "features": [
-      "100+ comandos",
-      "8 categorias",
-      "Sistema de economia",
-      "Download de mídia",
-      "Administração de grupos",
-      "Pesquisas online",
-      "Tradução automática",
-      "API Keys configuráveis"
+      "100+ commands",
+      "8 categories",
+      "Economy system",
+      "Media download",
+      "Group administration",
+      "Online search",
+      "Automatic translation",
+      "Configurable API Keys"
     ]
   },
   "config": {
     "api_keys_required": {
-      "openweathermap": "Para comando !clima",
-      "newsapi": "Para comando !noticias",
-      "omdb": "Para comando !filme"
+      "openweathermap": "For !clima command",
+      "newsapi": "For !noticias command",
+      "omdb": "For !filme command"
     },
-    "notes": "Configure as API Keys em configuracao.js após instalar as dependências"
+    "notes": "Configure API Keys in configuration.js after installing dependencies"
   }
 }
