@@ -1,34 +1,61 @@
 const config = require('../configuration');
+const fs = require('fs').promises;
+const path = require('path');
 
 module.exports = {
     nome: "apostar",
-    descricao: "Aposta uma quantia",
-    categoria: "economia",
-    exemplo: "100",
-    executar: async (sock, msg, commandArgs) => {
-        const fromJid = msg.key.remoteJid;
-        const usuario = msg.key.participant || fromJid;
+    descricao: "Apostar uma quantia na roleta. Ganhe o dobro ou perca tudo.",
+    categoria: "jogos",
+    exemplo: "apostar 100",
+    executar: async (sock, msg, args) => {
+        const from = msg.key.remoteJid;
+        const userId = msg.key.participant || msg.key.remoteJid;
         
-        if (!commandArgs[0] || isNaN(commandArgs[0])) {
-            return sock.sendMessage(fromJid, { 
-                text: "❌ Digite uma quantia para apostar.\nExemplo: !apostar 100"
+        if (!args[0] || isNaN(args[0]) || args[0] <= 0) {
+            await sock.sendMessage(from, { 
+                text: "❌ Use: *apostar <quantia>*\nExemplo: aposta 100" 
             });
+            return;
         }
         
-        const quantia = parseInt(commandArgs[0]);
-        const vitoria = Math.random() < 0.4; // 40% de chance de ganhar
-        const multiplicador = vitoria ? 2 : 0;
-        const resultado = vitoria ? `✅ Ganhou +$${quantia * multiplicador}` : `❌ Perdeu -$${quantia}`;
+        const quantia = parseInt(args[0]);
         
-        await sock.sendMessage(fromJid, { 
-            text: `🎰 *Aposta*\n\n` +
-                  `👤 *Apostador:* @${usuario.split('@')[0]}\n` +
-                  `💰 *Quantia:* $${quantia}\n` +
-                  `🎯 *Resultado:* ${resultado}\n` +
-                  `📊 *Chance de vitória:* 40%\n` +
-                  `🎲 *Multiplicador:* ${multiplicador}x\n\n` +
-                  `⚠️ *Lembre-se:* Jogue com responsabilidade!`
-        }, { quoted: msg, mentions: [usuario] });
+        try {
+            const dbPath = path.join(__dirname, '../database/games.json');
+            const data = await fs.readFile(dbPath, 'utf8');
+            const db = JSON.parse(data);
+            
+            if (!db.usuarios[userId]) {
+                db.usuarios[userId] = { saldo: 1000 };
+            }
+            
+            if (db.usuarios[userId].saldo < quantia) {
+                await sock.sendMessage(from, { 
+                    text: `❌ Saldo insuficiente! Você tem ¢${db.usuarios[userId].saldo}` 
+                });
+                return;
+            }
+            
+            // Roleta: 50% de chance
+            const vitoria = Math.random() > 0.5;
+            
+            if (vitoria) {
+                db.usuarios[userId].saldo += quantia;
+                await sock.sendMessage(from, { 
+                    text: `🎉 *VOCÊ GANHOU!*\n+¢${quantia}\nNovo saldo: ¢${db.usuarios[userId].saldo}` 
+                });
+            } else {
+                db.usuarios[userId].saldo -= quantia;
+                await sock.sendMessage(from, { 
+                    text: `💥 *VOCÊ PERDEU!*\n-¢${quantia}\nNovo saldo: ¢${db.usuarios[userId].saldo}` 
+                });
+            }
+            
+            await fs.writeFile(dbPath, JSON.stringify(db, null, 2));
+            
+        } catch (error) {
+            console.error(error);
+            await sock.sendMessage(from, { text: "❌ Erro ao processar aposta!" });
+        }
     }
 };
-/* CarsaiBot - cbot - carsai */

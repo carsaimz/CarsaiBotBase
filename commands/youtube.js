@@ -1,41 +1,127 @@
+// commands/yt.js
 const config = require('../configuration');
+const axios = require('axios');
+const ytdl = require('ytdl-core');
 const yts = require('yt-search');
 
 module.exports = {
-    nome: "youtube",
-    descricao: "Busca vídeos no YouTube",
-    categoria: "midia",
-    exemplo: "música 2024",
+    nome: "yt",
+    descricao: "Baixa vídeos ou músicas do YouTube",
+    categoria: "download",
+    exemplo: "!yt <link ou nome> [áudio]",
     executar: async (sock, msg, commandArgs) => {
         const fromJid = msg.key.remoteJid;
         
         if (!commandArgs[0]) {
             return sock.sendMessage(fromJid, { 
-                text: "❌ Digite o termo de busca.\nExemplo: !youtube música brasileira"
+                text: "🎵 *YouTube Downloader*\n\n📌 *Como usar:*\n!yt <link ou nome do vídeo> [áudio]\n\n📝 *Exemplos:*\n• !yt https://youtube.com/watch?v=...\n• !yt música nome - para pesquisar\n• !yt link áudio - baixa só áudio"
             });
         }
         
-        const query = commandArgs.join(' ');
+        const isAudio = commandArgs.includes('áudio') || commandArgs.includes('audio') || commandArgs.includes('mp3');
+        const query = commandArgs.filter(arg => !['áudio', 'audio', 'mp3'].includes(arg.toLowerCase())).join(' ');
         
         try {
-            const resultado = await yts(query);
-            const videos = resultado.videos.slice(0, 5);
+            let videoId, videoInfo;
             
-            let response = `🎬 *Resultados do YouTube:* "${query}"\n\n`;
+            // Verifica se é link direto
+            if (query.includes('youtube.com') || query.includes('youtu.be')) {
+                const url = query.startsWith('http') ? query : 'https://' + query;
+                videoId = ytdl.getVideoID(url);
+                videoInfo = await ytdl.getInfo(videoId);
+            } else {
+                // Pesquisa pelo nome
+                await sock.sendMessage(fromJid, { 
+                    text: "🔍 *Pesquisando no YouTube...*"
+                });
+                
+                const searchResults = await yts(query);
+                if (!searchResults.videos || searchResults.videos.length === 0) {
+                    return sock.sendMessage(fromJid, { 
+                        text: "❌ Nenhum vídeo encontrado para essa pesquisa."
+                    });
+                }
+                
+                const video = searchResults.videos[0];
+                videoId = video.videoId;
+                videoInfo = await ytdl.getInfo(video.url);
+                
+                await sock.sendMessage(fromJid, { 
+                    text: `✅ *Encontrado:* ${video.title}\n📊 *Duração:* ${video.timestamp}\n👁️ *Visualizações:* ${video.views.toLocaleString()}`
+                });
+            }
             
-            videos.forEach((video, index) => {
-                response += `${index + 1}. *${video.title}*\n`;
-                response += `   👁️ ${video.views} views | ⏱️ ${video.timestamp}\n`;
-                response += `   👤 ${video.author.name}\n`;
-                response += `   🔗 ${video.url}\n\n`;
+            const title = videoInfo.videoDetails.title.replace(/[^\w\s]/gi, '');
+            const duration = parseInt(videoInfo.videoDetails.lengthSeconds);
+            
+            // Verifica limite de tamanho/duração
+            const maxDuration = 30 * 60; // 30 minutos
+            if (duration > maxDuration) {
+                return sock.sendMessage(fromJid, { 
+                    text: `❌ *Vídeo muito longo*\nDuração: ${Math.floor(duration/60)}min\nLimite: 30 minutos\n\n💡 *Solução:* Use !ytmp3 para extrair apenas o áudio`
+                });
+            }
+            
+            await sock.sendMessage(fromJid, { 
+                text: `⬇️ *Baixando ${isAudio ? 'áudio' : 'vídeo'}...*\n🎬 *${title}*\n⏱️ ${Math.floor(duration/60)}:${(duration%60).toString().padStart(2, '0')}`
             });
             
-            response += `📊 Total de resultados: ${resultado.videos.length}`;
+            // Configurações de qualidade
+            let quality = 'highest';
+            let filter = isAudio ? 'audioonly' : 'audioandvideo';
             
-            await sock.sendMessage(fromJid, { text: response }, { quoted: msg });
+            const stream = ytdl(videoInfo.videoDetails.video_url, {
+                filter: filter,
+                quality: quality
+            });
+            
+            // Buffer do vídeo/áudio
+            const chunks = [];
+            stream.on('data', chunk => chunks.push(chunk));
+            
+            stream.on('end', async () => {
+                const buffer = Buffer.concat(chunks);
+                const fileSize = buffer.length;
+                
+                if (fileSize > 100 * 1024 * 1024) { // 100MB limite do WhatsApp
+                    return sock.sendMessage(fromJid, { 
+                        text: `❌ *Arquivo muito grande*\nTamanho: ${(fileSize/(1024*1024)).toFixed(1)}MB\nLimite: 100MB\n\n💡 *Solução:* Use !ytmp3 para áudio apenas`
+                    });
+                }
+                
+                // Envia o arquivo
+                if (isAudio) {
+                    await sock.sendMessage(fromJid, {
+                        audio: buffer,
+                        mimetype: 'audio/mpeg',
+                        fileName: `${title}.mp3`
+                    }, { quoted: msg });
+                } else {
+                    await sock.sendMessage(fromJid, {
+                        video: buffer,
+                        mimetype: 'video/mp4',
+                        fileName: `${title}.mp4`,
+                        caption: `🎬 *${title}*`
+                    }, { quoted: msg });
+                }
+                
+                await sock.sendMessage(fromJid, { 
+                    text: `✅ *Download completo!*\n📁 ${(fileSize/(1024*1024)).toFixed(1)}MB`
+                });
+            });
+            
+            stream.on('error', (err) => {
+                console.error('Erro no download:', err);
+                sock.sendMessage(fromJid, { 
+                    text: "❌ Erro ao baixar o vídeo. Tente novamente."
+                });
+            });
+            
         } catch (error) {
-            await sock.sendMessage(fromJid, { text: "❌ Erro na busca do YouTube." });
+            console.error('Erro YouTube:', error);
+            await sock.sendMessage(fromJid, { 
+                text: `❌ *Erro:* ${error.message}\n\n💡 *Dicas:*\n• Verifique o link\n• Vídeo pode estar privado/removido\n• Tente usar o comando de pesquisa: !yt nome do vídeo`
+            });
         }
     }
 };
-/* CarsaiBot - cbot - carsai */
