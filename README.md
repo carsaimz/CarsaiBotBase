@@ -8,20 +8,54 @@ Um bot para WhatsApp robusto, construído com foco em performance, facilidade de
 ![Commands](https://img.shields.io/badge/comandos-100+-brightgreen)
 ![Node](https://img.shields.io/badge/node-%3E%3D18-green)
 ![License](https://img.shields.io/badge/license-ISC-orange)
-![Moçambique](https://img.shields.io/badge/Made%20in-Moçambique-red)
+![CarsaiDev](https://img.shields.io/badge/Made%20by-CarsaiDev-red)
 
-## ✨ Novidades da Versão 2.0
+## ✨ Novidades da Versão 2.0.1
 
-- ✅ **100+ comandos** organizados em 8 categorias
-- ✅ **Sistema de economia** com saldo e recompensas diárias
-- ✅ **Download avançado** de mídia (YouTube, áudio, vídeo)
-- ✅ **Tradução automática** entre 100+ idiomas
-- ✅ **Pesquisas online** (Wikipedia, Google, notícias em tempo real)
-- ✅ **API Keys configuráveis** para funcionalidades premium
-- ✅ **Sistema anti-link** inteligente com detecção automática
-- ✅ **QR Code generator** integrado
-- ✅ **Figurinhas personalizadas** com watermark
-- ✅ **Sistema de categorias** automático no menu
+### 📥 **SISTEMA DE DOWNLOAD COMPLETO**
+- ✅ **YouTube Downloader** - Vídeos e músicas com qualidade HD
+- ✅ **TikTok Downloader** - Vídeos com informações completas
+- ✅ **Instagram Downloader** - Fotos, vídeos e reels
+- ✅ **Facebook Downloader** - Vídeos públicos automaticamente
+- ✅ **Google Drive Downloader** - Arquivos públicos até 100MB
+- ✅ **MediaFire Downloader** - Links diretos com extração automática
+- ✅ **MEGA Downloader** - Suporte a links .nz públicos
+- ✅ **Download Universal** - Detecta plataforma automaticamente
+
+### 🎬 **SISTEMA DE PESQUISA DE MÍDIA**
+- ✅ **Filmes** - Informações completas com TMDB
+- ✅ **Séries** - Temporadas, episódios e status
+- ✅ **Animes** - Detecta automaticamente tipo e gênero
+- ✅ **Atores** - Perfil completo e filmografia
+
+### 🔧 **MELHORIAS TÉCNICAS**
+- ✅ **Arquitetura modular** - Cada comando em arquivo separado
+- ✅ **Sistema de fallback** - Múltiplos métodos quando APIs falham
+- ✅ **Limites inteligentes** - Verificação de tamanho antes do download
+- ✅ **Progresso de download** - Feedback em tempo real
+- ✅ **Erros descritivos** - Dicas de solução para problemas comuns
+
+### 📊 **ESTATÍSTICAS**
+- ✅ **12 comandos novos** de mídia e download
+- ✅ **7 plataformas** suportadas para download
+- ✅ **4 fontes** de pesquisa de mídia
+- ✅ **100% compatível** com limites do WhatsApp
+- ✅ **Sistema automático** de detecção de plataforma
+
+### 🔄 **MUDANÇAS DA VERSÃO 2.0**
+- ✅ **Comandos mais específicos** (ex: !yt, !tiktok)
+- ✅ **Estrutura de arquivos reorganizada**
+- ✅ **Código otimizado** para performance
+- ✅ **Melhor documentação** e mensagens de ajuda
+- ✅ **Sistema de tradução** em comandos de mídia
+
+### ⚠️ **REQUISITOS**
+- Node.js 16+
+- API Key TMDB (gratuita)
+- Dependências atualizadas (ver package.json)
+- Conexão estável com internet
+
+📖 **Ver todas as mudanças no [CHANGELOG.md](CHANGELOG.md)**
 
 ## 🚀 Começando Rápido
 
@@ -34,66 +68,45 @@ Siga estes passos para colocar o bot em funcionamento:
     npm install
     ```
 
-2.  **Crie os Comandos (se necessário):**
-    ```bash
-    bash criar_comandos.sh
-    ```
+2.  **Gere a Chave de Ativação de Bot (se necessário, caso seja novo):**
+- Entra no site do bot [carsaibot.linkpc.net](https://carsaibot.linkpc.net)
+- Clique em "Chaves" ou "Começar Agora" (ou procure documentação)
+- Na página de geração de chaves, clique em "Gerar Chave"
+- Copie a chave e coloque no arquivo *configuration.js* no campo *activationKey = "chave"* (substituir palavra *chave* pela chave copiada)
 
 3.  **Configure as APIs (opcional mas recomendado):**
-    Edite `configuracao.js` e adicione suas chaves gratuitas:
+    Edite `configuration.js` e adicione suas chaves gratuitas:
     - OpenWeatherMap (para `!clima`)
     - NewsAPI (para `!noticias`)
-    - OMDB API (para `!filme`)
+    - TMDB API (para `!filme`, `!serie`, `!anime` e `!ator`)
 
 4.  **Inicie o Sistema:**
     ```bash
     npm start
     ```
+ou
+    ```bash
+    sh start.sh
+    ```
 
 5.  **Realize o Pareamento:** No primeiro acesso, o bot solicitará o número do WhatsApp. Um código de pareamento será exibido no terminal. Basta inseri-lo no seu aplicativo WhatsApp em **Aparelhos Conectados > Conectar com número**.
-
-## 📊 Categorias de Comandos (100+)
-
-### 👥 **Administração** (15 comandos)
-Gestão completa de grupos: `!ban`, `!promover`, `!rebaixar`, `!adicionar`, `!marcartodos`, `!antilink`, `!descricao`, `!foto`, `!listaradmins`, `!abrir`, `!fechar`, `!linkgrupo`, `!config`, `!mudarnome`, `!sair`
-
-### 🛠️ **Utilidades** (15 comandos)
-Ferramentas do dia a dia: `!ping`, `!info`, `!horario`, `!calc`, `!cep`, `!moedas`, `!clima`, `!traducao`, `!qrcode`, `!peso`, `!medidas`, `!calendario`, `!lembrete`, `!contador`, `!geradorsenha`
-
-### 📸 **Mídia** (15 comandos)
-Processamento de conteúdo: `!figurinha`, `!toimg`, `!audio`, `!tts`, `!youtube`, `!video`, `!musica`, `!baixarvideo`, `!baixaraudio`, `!comprimir`, `!converter`, `!cortar`, `!juntar`, `!efeitos`, `!watermark`
-
-### 🎮 **Diversão** (15 comandos)
-Entretenimento e jogos: `!jogodavelha`, `!dado`, `!caraoucoroa`, `!pergunta`, `!piada`, `!cpf`, `!cnpj`, `!quiz`, `!adivinhacao`, `!memes`, `!frases`, `!curiosidades`, `!horoscopo`, `!simsimi`, `!roletarussa`
-
-### 🔍 **Pesquisa** (15 comandos)
-Busca de informações: `!wikipedia`, `!google`, `!noticias`, `!filme`, `!series`, `!dicionario`, `!sinonimos`, `!receitas`, `!covid`, `!futebol`, `!cotações`, `!vagas`, `!tutorial`, `!mapa`, `!endereco`
-
-### 👑 **Dono** (15 comandos)
-Comandos exclusivos: `!eval`, `!exec`, `!broadcast`, `!sairgrupo`, `!bloquear`, `!desbloquear`, `!reload`, `!backup`, `!restart`, `!logs`, `!usuarios`, `!estatisticas`, `!manutencao`, `!limpar`, `!debug`
-
-### ℹ️ **Informação** (5 comandos)
-Status e ajuda: `!status`, `!ajuda`, `!menu`, `!sobre`, `!changelog`
-
-### 💰 **Economia** (5 comandos)
-Sistema de pontos: `!saldo`, `!diario`, `!apostar`, `!transferir`, `!top`
 
 ## 🏗️ Arquitetura do Projeto
 
 A estrutura modular facilita a expansão e organização do código.
 
 *   `index.js`: O cérebro do bot. Gerencia o fluxo de mensagens e o sistema de comandos.
-*   `conexao.js`: Cuida de toda a comunicação com a biblioteca Baileys e do processo de Pairing Code.
-*   `configuracao.js`: Central de configurações (Nome do Bot, Prefixo, Números de Admin, Chave de Licença, API Keys).
-*   `/comandos`: Pasta modular com **100+ comandos** organizados automaticamente. Cada novo arquivo `.js` aqui é automaticamente reconhecido como um comando.
+*   `connection.js`: Cuida de toda a comunicação com a biblioteca Baileys e do processo de Pairing Code.
+*   `configuration.js`: Central de configurações (Nome do Bot, Prefixo, Números de Admin, Chave de Licença, API Keys).
+*   `/commands`: Pasta modular com **100+ comandos** organizados automaticamente. Cada novo arquivo `.js` aqui é automaticamente reconhecido como um comando.
 *   `/lib`: Bibliotecas internas com funções utilitárias e um sistema avançado de logs coloridos.
 *   `/database`: Armazenamento local para persistência de dados.
 
 ## ✨ Funcionalidades Principais
 
 ### 🎯 **Núcleo Avançado**
-*   **Sistema de Licenciamento:** Ativação segura via chave, configurável em `configuracao.js`.
-*   **Arquitetura Modular:** Adicione ou remova funcionalidades criando arquivos na pasta `/comandos` sem tocar no núcleo.
+*   **Sistema de Licenciamento:** Ativação segura via chave, configurável em `configuration.js`.
+*   **Arquitetura Modular:** Adicione ou remova funcionalidades criando arquivos na pasta `/commands` sem tocar no núcleo.
 *   **Logs Inteligentes:** Saída no console organizada de forma vertical e colorida para melhor depuração e monitoramento.
 *   **Conexão via Pairing Code:** Conecte-se usando apenas o número de telefone, sem a necessidade de escanear QR Codes.
 
@@ -115,13 +128,13 @@ A estrutura modular facilita a expansão e organização do código.
 
 ## 📜 Sistema de Comandos Modular
 
-A pasta `/comandos` é o coração da expansibilidade do bot. Para criar um novo comando:
+A pasta `/commands` é o coração da expansibilidade do bot. Para criar um novo comando:
 
-1.  Crie um novo arquivo `.js` dentro da pasta `/comandos`.
+1.  Crie um novo arquivo `.js` dentro da pasta `/commands`.
 2.  Exporte um objeto seguindo este modelo:
 
 ```javascript
-const config = require('../configuracao');
+const config = require('../configuration');
 
 module.exports = {
     nome: "nomecomando", // Nome do comando (sem prefixo)
@@ -158,7 +171,6 @@ O sistema automaticamente:
 ```bash
 !clima Maputo            # Previsão do tempo atual
 !calc 15 * 3             # Calculadora científica
-!cep 01001000            # Consulta informações de CEP
 !traducao pt en Olá      # Traduz "Olá" de português para inglês
 !qrcode https://google.com # Gera QR Code para o Google
 ```
@@ -193,7 +205,7 @@ Para funcionalidades completas, obtenha estas APIs gratuitas:
 2. NewsAPI (notícias): https://newsapi.org
 3. OMDB API (filmes): http://www.omdbapi.com/apikey.aspx
 
-**Adicione as chaves em configuracao.js:**
+**Adicione as chaves em configuration.js:**
 
 ```javascript
 module.exports = {

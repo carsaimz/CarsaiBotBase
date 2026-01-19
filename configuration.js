@@ -9,12 +9,17 @@ module.exports = {
     onlyAdminMode: false,
     antilink: true,
     activationKey: "cbot-12345",
+    
     // ===================== APIS EXTERNAS =====================
+    
     // OpenWeatherMap (https://openweathermap.org/api)
     openWeatherKey: "sua_chave_aqui",
     
     // NewsAPI (https://newsapi.org)
     newsApiKey: "30beb8e52698484ea3b45c76572729b2",
+    
+    // TMDB API (https://themoviedb.org)
+    tmdbApiKey: "62f6c45a150db7ec1363ea4418f206e9",
     
     // OMDB API (http://www.omdbapi.com)
     omdbApiKey: "7d2ac176",
