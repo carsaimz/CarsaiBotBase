@@ -4,7 +4,7 @@
 
 Um bot para WhatsApp robusto, construído com foco em performance, facilidade de manutenção e escalabilidade. Agora com **100+ comandos** organizados em 8 categorias, sistema de economia, downloads avançados e muito mais. Desenvolvido seguindo as melhores práticas para 2026, é a solução ideal para quem precisa de um sistema automatizado poderoso e estruturado.
 
-![Version](https://img.shields.io/badge/version-2.0-blue)
+![Version](https://img.shields.io/badge/version-2.0.1-blue)
 ![Commands](https://img.shields.io/badge/comandos-100+-brightgreen)
 ![Node](https://img.shields.io/badge/node-%3E%3D18-green)
 ![License](https://img.shields.io/badge/license-ISC-orange)
