@@ -1,0 +1,386 @@
+COMANDO 1 (removebg.js):
+
+import axios from "axios"
+import FormData from "form-data"
+import fs from "fs"
+
+async function removerBg(filePath) {
+  try {
+    const form = new FormData();
+    form.append("file", fs.createReadStream(filePath));
+
+    const res = await axios.post("https://removebg.one/api/predict/v2", form, {
+      headers: {
+        ...form.getHeaders(),
+        "accept": "application/json, text/plain, */*",
+        "locale": "en-US",
+        "platform": "PC",
+        "product": "REMOVEBG",
+        "sec-ch-ua": "\"Chromium\";v=\"127\", \"Not)A;Brand\";v=\"99\", \"Microsoft Edge Simulate\";v=\"127\", \"Lemur\";v=\"127\"",
+        "sec-ch-ua-mobile": "?1",
+        "sec-ch-ua-platform": "\"Android\"",
+        "Referer": "https://removebg.one/upload"
+      }
+    })
+
+    let data = res.data?.data;
+    console.log("✅ Fundo Removido com Sucesso");
+    console.log("Original :", data.url)
+    console.log("Cutout   :", data.cutoutUrl);
+    console.log("Mask     :", data.maskUrl);
+
+  } catch (e) {
+    console.error("❌ Ocorreu um erro:", e.message);
+  }
+}
+
+removerBg("./teste.jpg");
+
+COMANDO 2 (ytmp4.js):
+
+import axios from 'axios'
+import fs from 'fs'
+
+async function getVideoInfo(url) {
+  const { data } = await axios.post(`https://api.ytmp4.fit/api/video-info`, { url }, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Origin': 'https://ytmp4.fit',
+      'Referer': 'https://ytmp4.fit/'
+    }
+  })
+
+  if (!data || !data.title) throw new Error('Gagal mengambil info video.')
+  return data
+}
+
+async function getDownloadLink(url, quality) {
+  const res = await axios.post(`https://api.ytmp4.fit/api/download`, { url, quality }, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/octet-stream',
+      'Origin': 'https://ytmp4.fit',
+      'Referer': 'https://ytmp4.fit/'
+    },
+    responseType: 'arraybuffer'
+  })
+
+  const contentType = res.headers['content-type']
+  if (!contentType.includes('video')) throw new Error('Link download tidak tersedia.')
+
+  return Buffer.from(res.data)
+}
+
+let yeon = async (m, { conn, text, usedPrefix, command }) => {
+  let [url, quality] = text.trim().split(/\s+/)
+
+  if (!url || !quality) {
+    await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } })
+    return conn.sendMessage(m.chat, {
+      text: `📼 *Senpai*, gunakan perintah seperti ini ya:\n\n` +
+            `> *${usedPrefix + command}* <url> <quality>\n\n` +
+            `Contoh:\n\`\`\`${usedPrefix + command} https://youtube.com/watch?v=dQw4w9WgXcQ 360p\`\`\``
+    })
+  }
+
+  try {
+    await conn.sendMessage(m.chat, { react: { text: '⏳', key: m.key } })
+    const info = await getVideoInfo(url)
+
+    const videoBuffer = await getDownloadLink(url, quality)
+
+    await conn.sendMessage(m.chat, {
+      video: videoBuffer,
+      mimetype: 'video/mp4',
+      fileName: `${info.title} - ${quality}.mp4`,
+      caption: `🎬 *YTMP4 Downloader* 🎬\n\n` +
+               `*📌 Judul:* ${info.title}\n` +
+               `*📺 Channel:* ${info.channel}\n` +
+               `*⏱ Durasi:* ${info.duration}\n` +
+               `*👁 Views:* ${info.views}\n` +
+               `*💾 Kualitas:* ${quality}`
+    })
+
+    await conn.sendMessage(m.chat, { react: { text: '✨', key: m.key } })
+
+  } catch (err) {
+    await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } })
+    await conn.sendMessage(m.chat, {
+      text: `😢 *Yahh, gagal download nih Senpai...*\n` +
+            `> *Error:* \`${err.message}\`\n\n` +
+            `Coba pastikan URL dan kualitas yang kamu minta tersedia ya 💡`
+    })
+  }
+}
+
+yeon.help = ['ytmp4 <url> <quality>']
+yeon.tags = ['downloader']
+yeon.command = /^(ytmp4)$/i
+yeon.register = true
+yeon.limit = true
+export default yeon
+
+COMANDO 3 (fb.js ou facebook.js):
+
+/*[ FACEBOOK DOWNLOAD ]*/
+
+const fetch = require("node-fetch");
+
+async function facebook(url) {
+
+  const headers = {
+    accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+    "sec-fetch-site": "none",
+    "sec-fetch-user": "?1",
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0"
+  };
+
+  try {
+    const response = await fetch(url, { headers });
+    const html = await response.text();
+
+    const title = html.match(/<meta name="description" content="([^"]+?)"/)?.[1] || null;
+    const views = html.match(/<meta property="og:title" content="([^"]+)"/)?.[1]
+      ?.match(/([\d.,]+[ \u00A0]?[KM]?[ \u00A0]?(views|tayangan|vues))/i)?.[1] || null;
+    const reaction = html.match(/<meta property="og:title" content="([^"]+)"/)?.[1]
+      ?.match(/([\d.,]+[ \u00A0]?[KM]?[ \u00A0]?r[eé]actions)/i)?.[1] || null;
+    const video_sd = html.match(/"browser_native_sd_url":"(.+?)",/)?.[1]?.replace(/\\/g, "");
+    const video_hd = html.match(/"browser_native_hd_url":"(.+?)",/)?.[1]?.replace(/\\/g, "");
+    const audio = html.match(/"mime_type":"audio\\\/mp4","codecs":"mp4a\.40\.5","base_url":"(.+?)",/)?.[1]?.replace(/\\/g, "");
+
+    return {
+      metadata: {
+        title,
+        views,
+        reaction
+      },
+      download: {
+        video_sd,
+        video_hd,
+        audio
+      }
+    };
+  } catch (error) {
+    console.error("❌ Error on facebook():", error.message || error);
+    return { error: true, message: "Gagal mengambil data dari Facebook." };
+  }
+}
+
+facebook("https://www.facebook.com/reel/3731573800475152/?mibextid=rS40aB7S9Ucbxw6v")
+
+COMANDO (imgia.js) 4:
+*IA DE IMAGEM REALISTA*
+
+/* 
+• Scrape IA de imagem realista 
+*/
+
+import axios from 'axios';
+import FormData from 'form-data';
+
+const styleMap = {
+  photorealistic: 'imagem de estilo fotorrealista',
+  cinematic: 'imagem em estilo cinematográfico',
+  hyperreal: 'imagem de estilo hiper-realista ',
+  portrait: 'imagem estilo retrato'
+};
+
+const resolutionMap = {
+  '512x512': { width: 512, height: 512 },
+  '768x768': { width: 768, height: 768 },
+  '1024x1024': { width: 1024, height: 1024 },
+  '1920x1080': { width: 1920, height: 1080 }
+};
+
+export async function RealisticImage({ prompt, style = 'photorealistic', resolution = '768x768', seed = null }) {
+  const selectedStyle = styleMap[style.toLowerCase()];
+  const selectedRes = resolutionMap[resolution];
+
+  if (!selectedStyle || !selectedRes) {
+    return { success: false, error: 'Sem estilo ou resolução' };
+  }
+
+  const fullPrompt = `${selectedStyle}: ${prompt}`;
+  const form = new FormData();
+  form.append('action', 'generate_realistic_ai_image');
+  form.append('prompt', fullPrompt);
+  form.append('seed', (seed || Math.floor(Math.random() * 100000)).toString());
+  form.append('width', selectedRes.width.toString());
+  form.append('height', selectedRes.height.toString());
+
+  try {
+    const res = await axios.post('https://realisticaiimagegenerator.com/wp-admin/admin-ajax.php', form, {
+      headers: {
+        ...form.getHeaders(),
+        'origin': 'https://realisticaiimagegenerator.com',
+        'referer': 'https://realisticaiimagegenerator.com/',
+        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64)',
+        'accept': '*/*'
+      }
+    });
+
+    const json = res.data;
+    if (json?.success && json.data?.imageUrl) {
+      return {
+        success: true,
+        url: json.data.imageUrl
+      };
+    } else {
+      return {
+        success: false,
+        error: 'Sem resultado'
+      };
+    }
+  } catch (e) {
+    return {
+      success: false,
+      error: e.message
+    };
+  }
+}
+
+// tes
+const run = async () => {
+  const result = await RealisticImage({
+    prompt: 'mulher sentada no parque',
+    style: 'cinematic',
+    resolution: '1920x1080'
+  });
+
+  if (result.success) {
+    console.log('Result:', result.url);
+  } else {
+    console.error('Error:', result.error);
+  }
+};
+
+run();
+
+COMANDO 5 (gdrive.js):
+// • Scraper: google drive download
+
+import axios from 'axios';
+import * as cheerio from 'cheerio';
+
+async function driveScrape(url) {
+    try {
+        if (!/drive\.google\.com\/file\/d\//gi.test(url)) {
+            throw new Error("Invalid URL");
+        }
+        
+        const res = await axios.get(url, { 
+            timeout: 30000, 
+            headers: { 
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36" 
+            } 
+        }).then((v) => v.data);
+
+        const $ = cheerio.load(res);
+        const id = url.split("/")[5];
+        
+        const data = {
+            name: $("head").find("title").text().split("-")[0].trim(),
+            download: `https://drive.usercontent.google.com/uc?id=${id}&export=download`,
+            link: url,
+        };
+        return data;
+    } catch (e) {
+        console.error("API Error:", e.message);
+        throw new Error("Gagal mendapatkan respons dari API");
+    }
+}
+
+COMANDO 6 (spotfy.js):
+/*
+Scraper: SpotifyDl
+Base: https://spotmate.online
+Author: New cases
+*/
+
+import axios from "axios"
+import { CookieJar } from "tough-cookie"
+import { wrapper } from "axios-cookiejar-support"
+
+const BASE = "https://spotmate.online"
+const UA =
+  "Mozilla/5.0 (Linux; Android 15) AppleWebKit/537.36 Chrome/137 Mobile Safari/537.36"
+
+const jar = new CookieJar()
+const client = wrapper(
+  axios.create({
+    jar,
+    withCredentials: true,
+    headers: {
+      "user-agent": UA,
+      accept: "*/*"
+    }
+  })
+)
+
+async function getXsrf() {
+  await client.get(`${BASE}/en1`)
+  const cookies = await jar.getCookies(BASE)
+  const xsrf = cookies.find(c => c.key === "XSRF-TOKEN")
+  if (!xsrf) throw new Error("XSRF-TOKEN not found")
+  return decodeURIComponent(xsrf.value)
+}
+
+async function convertSpotify(url) {
+  const xsrf = await getXsrf()
+
+  const trackRes = await client.post(
+    `${BASE}/getTrackData`,
+    { spotify_url: url },
+    {
+      headers: {
+        "content-type": "application/json",
+        "x-xsrf-token": xsrf,
+        origin: BASE,
+        referer: `${BASE}/en1`
+      }
+    }
+  )
+
+  const convertRes = await client.post(
+    `${BASE}/convert`,
+    { urls: url },
+    {
+      headers: {
+        "content-type": "application/json",
+        "x-xsrf-token": xsrf,
+        origin: BASE,
+        referer: `${BASE}/en1`
+      }
+    }
+  )
+
+  const t = trackRes.data
+  const d = convertRes.data
+
+  return {
+    id: t.id,
+    title: t.name,
+    artist: t.artists.map(a => a.name).join(", "),
+    duration: `${Math.floor(t.duration_ms / 60000)}:${String(
+      Math.floor((t.duration_ms % 60000) / 1000)
+    ).padStart(2, "0")}`,
+    explicit: t.explicit,
+    thumbnail: t.album.images?.[0]?.url || null,
+    spotify_url: t.external_urls.spotify,
+    download_url: d.url
+  }
+}
+
+const spotifyUrl = process.argv[2]
+if (!spotifyUrl) {
+  console.log("Usage: node mif.js <spotify_url>")
+  process.exit(1)
+}
+
+convertSpotify(spotifyUrl)
+  .then(result => {
+    console.log(JSON.stringify(result, null, 2))
+  })
+  .catch(err => {
+    console.error(err.response?.data || err.message)
+  })

@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Caminho para o banco de dados de grupos
-const dbPath = path.join(__dirname, 'storage', 'groups.json');
+const dbPath = path.join(__dirname, 'database', 'groups.json');
 
 // Função para ler o banco de dados
 function readDB() {

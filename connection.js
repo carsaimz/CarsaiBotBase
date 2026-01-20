@@ -33,7 +33,7 @@ async function startConnection() {
     });
 
     if (!sock.authState.creds.registered) {
-        console.log("\n--- CONFIGURAÇÃO DE NOVO NÚMERO ---");
+        console.log("\n--- CONFIGURAÇÃO DE NÚMERO ---");
         let phoneNumber = config.botNumber;
         if (!phoneNumber) {
             phoneNumber = await question('Digite o número do WhatsApp (ex: 258834888228):\n> ');

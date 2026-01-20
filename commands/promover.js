@@ -21,14 +21,15 @@ module.exports = {
             return sock.sendMessage(fromJid, { text: "❌ Apenas administradores podem usar este comando." });
         }
         
-        const mencionado = msg.message?.extendedTextMessage?.contextInfo?.mentionedJid?.[0];
+        const mencionado = msg.message.extendedTextMessage.contextInfo.mentionedJid[0];
+        const remetente = msg.key.participant || msg.key.remoteJid;
         if (!mencionado) {
             return sock.sendMessage(fromJid, { text: "❌ Marque o membro que deseja promover." });
         }
         
         try {
             await sock.groupParticipantsUpdate(fromJid, [mencionado], "promote");
-            await sock.sendMessage(fromJid, { text: `✅ @${mencionado.split('@')[0]} foi promovido a administrador.` }, { mentions: [mencionado] });
+            await sock.sendMessage(fromJid, { text: `✅ @${mencionado.split('@')[0]} foi promovido a administrador por @${remetente.split('@')[0]}.` }, { mentions: [mencionado, remetente] });
         } catch (e) {
             await sock.sendMessage(fromJid, { text: "❌ Erro ao promover membro." });
         }

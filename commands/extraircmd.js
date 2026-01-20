@@ -5,16 +5,14 @@ const config = require('../configuration');
 
 module.exports = {
     nome: "extraircmd",
-    descricao: "Extrai código de um comando (apenas dono)",
-    categoria: "dono",
+    descricao: "Extrai código de um comando",
+    categoria: "utilitarios",
     exemplo: "menu [text/arquivo]",
     executar: async (sock, msg, commandArgs) => {
         const fromJid = msg.key.remoteJid;
         const sender = msg.key.participant || fromJid;
         
-        if (!sender.includes(config.ownerNumber)) {
-            return sock.sendMessage(fromJid, { text: "❌ Comando restrito ao dono do bot." });
-        }
+
         
         if (commandArgs.length < 1) {
             return sock.sendMessage(fromJid, { 

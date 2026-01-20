@@ -24,7 +24,7 @@ module.exports = {
         const abracoAleatorio = abracos[Math.floor(Math.random() * abracos.length)];
         
         await sock.sendMessage(from, { 
-            text: `${abracoAleatorio} *Abraço enviado!*\n\nDe: @${remetente.split('@')[0]}\nPara: @${mencionado.split('@')[0]}`,
+            text: `${abracoAleatorio} *Abraço enviado!*\n\nO (a) @${remetente.split('@')[0]} mandou um abraço para @${mencionado.split('@')[0]}`,
             mentions: [remetente, mencionado]
         });
     }

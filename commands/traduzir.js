@@ -2,7 +2,7 @@
 const axios = require('axios');
 
 module.exports = {
-    nome: "tradutor",
+    nome: "traduzir",
     descricao: "Traduz texto automaticamente",
     categoria: "utilidades",
     exemplo: "!tradutor en pt Hello world",

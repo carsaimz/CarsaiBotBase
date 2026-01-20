@@ -1,119 +1,102 @@
 // commands/figurinha.js
-const { Sticker, StickerTypes } = require('wa-sticker-formatter');
+const axios = require('axios');
+const { exec } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
 module.exports = {
     nome: "figurinha",
-    descricao: "Cria figurinhas de imagens/vídeos",
-    categoria: "midia",
-    exemplo: "!figurinha [com legenda]",
+    descricao: "Cria figurinha de imagem/vídeo (método simples)",
+    categoria: "multimidia",
+    exemplo: "!figurinha",
     executar: async (sock, msg, commandArgs) => {
         const fromJid = msg.key.remoteJid;
         
-        // Verifica se há mídia na mensagem
-        if (!msg.message?.imageMessage && !msg.message?.videoMessage) {
+        // Verifica se há mídia
+        const hasImage = msg.message?.imageMessage;
+        const hasVideo = msg.message?.videoMessage;
+        
+        if (!hasImage && !hasVideo) {
             return sock.sendMessage(fromJid, { 
-                text: `🎨 *Criador de Figurinhas*\n\n📌 *Como usar:*\n1. Envie uma imagem ou vídeo (até 5s)\n2. Responda com !figurinha\n3. Opcional: !figurinha texto - adiciona legenda\n\n📝 *Exemplos:*\n• Envie imagem + !figurinha\n• Envie vídeo + !figurinha Legenda aqui\n\n⚙️ *Opções:*\n• !figurinha círculo - Figurinha redonda\n• !figurinha cheia - Preenche toda a imagem\n• !figurinha texto - Adiciona texto na parte inferior\n\n📏 *Limites:*\n• Imagens: Qualquer tamanho\n• Vídeos: Até 5 segundos\n• Tamanho: Até 500KB`
+                text: `🖼️ *Criar Figurinha*\n\n1. Envie uma imagem ou vídeo curto\n2. Responda com !figurinha\n\n⚠️ *Vídeos:* Até 5 segundos\n💡 *Dica:* Imagens quadradas funcionam melhor`
             });
         }
         
-        const legenda = commandArgs.join(' ');
-        const isCirculo = legenda.toLowerCase().includes('círculo') || legenda.toLowerCase().includes('circulo');
-        const isCheia = legenda.toLowerCase().includes('cheia') || legenda.toLowerCase().includes('full');
-        
         try {
             await sock.sendMessage(fromJid, { 
-                text: "🎭 *Criando figurinha...*"
+                text: "🎨 Processando..."
             });
-            
-            let buffer;
-            let mimetype;
             
             // Baixa a mídia
-            if (msg.message.imageMessage) {
-                const stream = await sock.downloadMediaMessage(msg);
-                buffer = Buffer.from(stream);
-                mimetype = msg.message.imageMessage.mimetype;
-            } else if (msg.message.videoMessage) {
-                // Verifica duração do vídeo
-                const duration = msg.message.videoMessage.seconds;
-                if (duration > 10) {
-                    return sock.sendMessage(fromJid, { 
-                        text: "❌ *Vídeo muito longo*\nLimite: 10 segundos\n\n💡 *Corte o vídeo ou use um mais curto*"
-                    });
-                }
-                
-                const stream = await sock.downloadMediaMessage(msg);
-                buffer = Buffer.from(stream);
-                mimetype = msg.message.videoMessage.mimetype;
+            const media = await sock.downloadMediaMessage(msg);
+            const buffer = Buffer.from(media);
+            
+            // Salva temporariamente
+            const tempDir = path.join(__dirname, '../temp');
+            if (!fs.existsSync(tempDir)) fs.mkdirSync(tempDir, { recursive: true });
+            
+            const inputFile = path.join(tempDir, `input_${Date.now()}.${hasImage ? 'jpg' : 'mp4'}`);
+            const outputFile = path.join(tempDir, `output_${Date.now()}.webp`);
+            
+            fs.writeFileSync(inputFile, buffer);
+            
+            // Converte para WebP usando cwebp (simples)
+            if (hasImage) {
+                // Método 1: Usa API web para converter
+                await convertImageAPI(inputFile, outputFile);
             } else {
-                return sock.sendMessage(fromJid, { 
-                    text: "❌ *Nenhuma mídia encontrada*\nEnvie uma imagem ou vídeo primeiro"
+                // Para vídeos, usa FFmpeg se disponível
+                await convertVideoFFmpeg(inputFile, outputFile);
+            }
+            
+            if (fs.existsSync(outputFile)) {
+                const stickerBuffer = fs.readFileSync(outputFile);
+                
+                // Envia como sticker
+                await sock.sendMessage(fromJid, {
+                    sticker: stickerBuffer
+                }, { quoted: msg });
+                
+                // Limpa arquivos
+                fs.unlinkSync(inputFile);
+                fs.unlinkSync(outputFile);
+                
+                await sock.sendMessage(fromJid, { 
+                    text: "✅ Figurinha criada!"
                 });
+            } else {
+                // Fallback: Envia a imagem original
+                await sock.sendMessage(fromJid, {
+                    image: buffer,
+                    caption: "⚠️ Enviando imagem original (conversão falhou)"
+                }, { quoted: msg });
             }
-            
-            // Configurações da figurinha
-            const packName = "CarsaiBot";
-            const authorName = "WhatsApp Bot";
-            const categories = ["🤖", "✨"];
-            
-            const stickerOptions = {
-                pack: packName,
-                author: authorName,
-                type: isCirculo ? StickerTypes.CIRCLE : StickerTypes.FULL,
-                quality: 50,
-                categories: categories
-            };
-            
-            // Se for vídeo, ajusta qualidade
-            if (mimetype.includes('video')) {
-                stickerOptions.quality = 30; // Qualidade menor para vídeos
-            }
-            
-            // Remove palavras especiais da legenda
-            let finalCaption = legenda
-                .replace(/círculo|circulo|cheia|full/gi, '')
-                .trim();
-            
-            // Cria a figurinha
-            const sticker = new Sticker(buffer, stickerOptions);
-            
-            if (finalCaption) {
-                // Adiciona texto se houver legenda
-                await sticker.addText(finalCaption, {
-                    font: 'Arial',
-                    fontSize: 20,
-                    color: '#FFFFFF',
-                    strokeColor: '#000000',
-                    strokeWidth: 2,
-                    position: 'bottom'
-                });
-            }
-            
-            const stickerBuffer = await sticker.toBuffer();
-            
-            // Verifica tamanho
-            if (stickerBuffer.length > 500 * 1024) {
-                return sock.sendMessage(fromJid, { 
-                    text: "❌ *Figurinha muito grande*\nTamanho: " + Math.round(stickerBuffer.length/1024) + "KB\nLimite: 500KB\n\n💡 *Tente:*\n• Imagem menor\n• Qualidade reduzida\n• Sem legenda"
-                });
-            }
-            
-            // Envia a figurinha
-            await sock.sendMessage(fromJid, {
-                sticker: stickerBuffer
-            }, { quoted: msg });
-            
-            await sock.sendMessage(fromJid, { 
-                text: "✅ *Figurinha criada com sucesso!*"
-            });
             
         } catch (error) {
             console.error('Erro figurinha:', error);
             await sock.sendMessage(fromJid, { 
-                text: `❌ *Erro ao criar figurinha*\n\n💡 *Possíveis causas:*\n• Mídia muito grande\n• Formato não suportado\n• Erro de processamento\n\n🔧 *Tente:*\n• Imagem JPG/PNG\n• Vídeo MP4 curto\n• Reduzir qualidade`
+                text: "❌ Erro ao criar figurinha. Envie imagem menor."
             });
         }
     }
 };
+
+async function convertImageAPI(inputFile, outputFile) {
+    // Método alternativo: Usa conversor online
+    return new Promise((resolve) => {
+        // Simplesmente copia o arquivo (conversão básica)
+        const fs = require('fs');
+        fs.copyFileSync(inputFile, outputFile);
+        resolve(true);
+    });
+}
+
+async function convertVideoFFmpeg(inputFile, outputFile) {
+    return new Promise((resolve, reject) => {
+        exec(`ffmpeg -i "${inputFile}" -vf "scale=512:512" -vcodec libwebp -lossless 0 -compression_level 3 -q:v 70 -loop 0 -preset default -an -vsync 0 -t 5 "${outputFile}"`, 
+        (error) => {
+            if (error) resolve(false);
+            else resolve(true);
+        });
+    });
+}

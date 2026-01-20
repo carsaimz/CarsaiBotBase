@@ -36,8 +36,8 @@ module.exports = {
                 return;
             }
             
-            // Roleta: 50% de chance
-            const vitoria = Math.random() > 0.5;
+            // Roleta: 20% de chance
+            const vitoria = Math.random() > 0.2;
             
             if (vitoria) {
                 db.usuarios[userId].saldo += quantia;

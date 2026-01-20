@@ -21,7 +21,7 @@ module.exports = {
             return sock.sendMessage(fromJid, { text: "❌ Apenas administradores podem usar este comando." });
         }
         
-        const mencionado = msg.message?.extendedTextMessage?.contextInfo?.mentionedJid?.[0];
+        const mencionado = msg.message.extendedTextMessage.contextInfo.mentionedJid[0];
         if (!mencionado) {
             return sock.sendMessage(fromJid, { text: "❌ Marque o administrador que deseja rebaixar." });
         }

@@ -24,7 +24,7 @@ module.exports = {
         const beijoAleatorio = beijos[Math.floor(Math.random() * beijos.length)];
         
         await sock.sendMessage(from, { 
-            text: `${beijoAleatorio} *Beijo enviado!*\n\nDe: @${remetente.split('@')[0]}\nPara: @${mencionado.split('@')[0]}`,
+            text: `${beijoAleatorio} *Beijo enviado!*\n\nO (a) @${remetente.split('@')[0]} mandou um beijo para @${mencionado.split('@')[0]}\n*Nota*: Se um de vocês é casado ou está num relacionamento, eu não estou envolvido de jeito nenhum. Estou fora e nem reclamei com meu dono, eu só atendi o pedido de @${remetente.split('@')[0]}.`,
             mentions: [remetente, mencionado]
         });
     }

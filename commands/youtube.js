@@ -1,4 +1,4 @@
-// commands/yt.js
+// commands/youtube.js
 const config = require('../configuration');
 const axios = require('axios');
 const ytdl = require('ytdl-core');
@@ -8,13 +8,13 @@ module.exports = {
     nome: "yt",
     descricao: "Baixa vídeos ou músicas do YouTube",
     categoria: "download",
-    exemplo: "!yt <link ou nome> [áudio]",
+    exemplo: "!youtube <link ou nome> [áudio]",
     executar: async (sock, msg, commandArgs) => {
         const fromJid = msg.key.remoteJid;
         
         if (!commandArgs[0]) {
             return sock.sendMessage(fromJid, { 
-                text: "🎵 *YouTube Downloader*\n\n📌 *Como usar:*\n!yt <link ou nome do vídeo> [áudio]\n\n📝 *Exemplos:*\n• !yt https://youtube.com/watch?v=...\n• !yt música nome - para pesquisar\n• !yt link áudio - baixa só áudio"
+                text: "🎵 *YouTube Downloader*\n\n📌 *Como usar:*\n!youtube <link ou nome do vídeo> [áudio]\n\n📝 *Exemplos:*\n• !youtube https://youtube.com/watch?v=...\n• !youtube música nome - para pesquisar\n• !youtube link áudio - baixa só áudio"
             });
         }
         
@@ -120,7 +120,7 @@ module.exports = {
         } catch (error) {
             console.error('Erro YouTube:', error);
             await sock.sendMessage(fromJid, { 
-                text: `❌ *Erro:* ${error.message}\n\n💡 *Dicas:*\n• Verifique o link\n• Vídeo pode estar privado/removido\n• Tente usar o comando de pesquisa: !yt nome do vídeo`
+                text: `❌ *Erro:* ${error.message}\n\n💡 *Dicas:*\n• Verifique o link\n• Vídeo pode estar privado/removido\n• Tente usar o comando de pesquisa: !youtube nome do vídeo`
             });
         }
     }

@@ -1,18 +1,18 @@
-// commands/tomp3.js
+// commands/mp3.js
 const axios = require('axios');
 const ytdl = require('ytdl-core');
 
 module.exports = {
-    nome: "tomp3",
+    nome: "mp3",
     descricao: "Converte YouTube para MP3 via API",
     categoria: "multimidia",
-    exemplo: "!tomp3 <link YouTube>",
+    exemplo: "!mp3 <link YouTube>",
     executar: async (sock, msg, commandArgs) => {
         const fromJid = msg.key.remoteJid;
         
         if (!commandArgs[0]) {
             return sock.sendMessage(fromJid, { 
-                text: `🎵 *YouTube para MP3*\n\nUse: !tomp3 <link YouTube>\nEx: !tomp3 https://youtu.be/abc123\n\n⚠️ *Limite:* 10 minutos\n💡 *Dica:* Use !yt <link> áudio para mais opções`
+                text: `🎵 *YouTube para MP3*\n\nUse: !mp3 <link YouTube>\nEx: !mp3 https://youtu.be/abc123\n\n⚠️ *Limite:* 10 minutos\n💡 *Dica:* Use !yt <link> áudio para mais opções`
             });
         }
         
@@ -79,7 +79,7 @@ module.exports = {
             });
             
         } catch (error) {
-            console.error('Erro tomp3:', error);
+            console.error('Erro mp3:', error);
             await sock.sendMessage(fromJid, { 
                 text: `❌ Erro: ${error.message}\nVerifique o link.`
             });

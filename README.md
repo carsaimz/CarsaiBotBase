@@ -63,8 +63,8 @@ Siga estes passos para colocar o bot em funcionamento:
 
 1.  **Clone e Instale:**
     ```bash
-    git clone https://github.com/carsaimz/CarsaiBotBase.git
-    cd CarsaiBotBase
+    git clone https://github.com/carsaimz/carsaibot.git
+    cd carsaibot
     npm install
     ```
 
@@ -239,11 +239,11 @@ npm run dev  # Modo desenvolvimento com recarga automática
 
 ### 👨‍💻 Sobre o Desenvolvedor & a Organização
 
-O CarsaiBotBase 2.0 é um projeto desenvolvido pela CarsaiDev, parte do ecossistema digital CarsaiMz (ou Carsai Mozambique). A organização está sediada em Moçambique e tem como foco fornecer soluções acessíveis em desenvolvimento web, hospedagem e educação digital.
+O CarsaiBot é um projeto desenvolvido pela CarsaiDev, parte do ecossistema digital CarsaiMz (ou Carsai Mozambique). A organização está sediada em Moçambique e tem como foco fornecer soluções acessíveis em desenvolvimento web, hospedagem e educação digital.
 
 - Dono do Projeto: CarsaiDev
-- Nome do Bot: CarsaiBot 2.0
-- Versão: 2.0.0 (100+ Comandos)
+- Nome do Bot: CarsaiBot
+- Versão: 2.0.1 
 - WhatsApp para Contato: +258 86 241 4345
 - Email: suporte.carsaimz@gmail.com
 

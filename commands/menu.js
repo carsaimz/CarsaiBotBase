@@ -104,8 +104,8 @@ module.exports = {
         
         let menuText = `
 ╔═════════════════════════╗
-║   👋 Olá, *${userName}!*  ║
-║   Bem-vindo ao *${config.botName}*  ║
+║   👋 Olá, *${userName}!*  
+║   Bem-vindo ao *${config.botName}*  
 ╚═════════════════════════╝
 
 🤖 *Informações do Bot (cbot):*
@@ -126,9 +126,9 @@ for (const category of sortedCategories) {
 
   categoryCommands.sort((a, b) => a.nome.localeCompare(b.nome));
 
-  menuText += `${format.emoji} *${format.title}:*\n`;
+  menuText += `*${format.title}:*\n`;
   for (const cmd of categoryCommands) {
-    menuText += `• ${config.prefix}${cmd.nome.padEnd(15)} - ${cmd.descricao}\n`;
+    menuText += `• \`${config.prefix}${cmd.nome}\` (${cmd.descricao})\n`;
   }
   menuText += '\n';
 }
@@ -136,8 +136,8 @@ for (const category of sortedCategories) {
 menuText += `_Para mais ajuda, use ${config.prefix}ajuda [comando]_`;
 menuText += `\n\n💡 *Dica:* Envie uma imagem com a legenda *s* para criar uma figurinha! - CarsaiBot`;
 menuText += `\n\n💸 *Ajude a manter o bot:*
-• M-pesa: 842846463
-• e-Mola: 862414345`;
+• M-pesa: 842846463 (Carimo) \n
+• e-Mola: 862414345 (Carimo)`;
         
         try {
             if (config.logo) {
