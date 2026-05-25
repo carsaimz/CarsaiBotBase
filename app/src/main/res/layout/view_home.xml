@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/windowBackground"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingTop="48dp"
+        android:paddingBottom="24dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
+
+        <!-- Logo + name -->
+        <ImageView
+            android:id="@+id/home_logo"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="fitCenter"/>
+
+        <TextView
+            android:id="@+id/home_app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimary"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/home_tagline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/private_tagline"
+            android:textSize="13sp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Search bar -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/search_card"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="28dp"
+            app:cardBackgroundColor="?attr/colorSurface"
+            app:cardCornerRadius="26dp"
+            app:cardElevation="2dp"
+            app:strokeColor="@color/border"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <Button
+                    android:id="@+id/btn_engine"
+                    style="@style/Widget.CBrowser.SearchEngine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Google"/>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:background="@color/border"/>
+
+                <EditText
+                    android:id="@+id/home_search_input"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="@string/search_hint"
+                    android:textColorHint="@color/text_hint"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="14sp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="4dp"
+                    android:singleLine="true"
+                    android:imeOptions="actionSearch"
+                    android:inputType="textUri"
+                    android:textCursorDrawable="@null"/>
+
+                <ImageButton
+                    android:id="@+id/btn_home_search"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_search"
+                    android:tint="@color/accent"
+                    android:contentDescription="Search"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Quick sites -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quick access"
+            android:textSize="12sp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"/>
+
+        <GridLayout
+            android:id="@+id/quick_sites_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="4"
+            android:rowCount="2"
+            android:useDefaultMargins="true"/>
+
+        <!-- Quick actions row -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quick actions"
+            android:textSize="12sp"
+            android:textColor="?android:attr/textColorSecondary"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- New tab -->
+            <LinearLayout
+                android:id="@+id/action_new_tab"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless">
+                <ImageView android:layout_width="32dp" android:layout_height="32dp"
+                    android:src="@drawable/ic_add" android:tint="@color/accent"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="New tab" android:textSize="11sp"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+
+            <!-- Settings -->
+            <LinearLayout
+                android:id="@+id/action_settings"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless">
+                <ImageView android:layout_width="32dp" android:layout_height="32dp"
+                    android:src="@drawable/ic_settings" android:tint="@color/accent"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Settings" android:textSize="11sp"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+
+            <!-- Clear data -->
+            <LinearLayout
+                android:id="@+id/action_clear"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless">
+                <ImageView android:layout_width="32dp" android:layout_height="32dp"
+                    android:src="@drawable/ic_shield" android:tint="@color/accent"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Clear data" android:textSize="11sp"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+
+            <!-- Tabs -->
+            <LinearLayout
+                android:id="@+id/action_tabs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless">
+                <ImageView android:layout_width="32dp" android:layout_height="32dp"
+                    android:src="@drawable/ic_tabs" android:tint="@color/accent"/>
+                <TextView
+                    android:id="@+id/action_tabs_count"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="0 tabs" android:textSize="11sp"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Privacy stats card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/privacy_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="?attr/colorSurface"
+            app:strokeColor="@color/border"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <ImageView android:layout_width="18dp" android:layout_height="18dp"
+                        android:src="@drawable/ic_shield" android:tint="@color/accent"
+                        android:layout_marginEnd="8dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Privacy protection active"
+                        android:textSize="14sp" android:textStyle="bold"
+                        android:textColor="?android:attr/textColorPrimary"/>
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:orientation="horizontal"
+                    android:layout_marginTop="12dp">
+
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                        <TextView android:id="@+id/stat_trackers"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="0" android:textSize="22sp" android:textStyle="bold"
+                            android:textColor="@color/accent"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Trackers blocked" android:textSize="11sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:gravity="center" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+
+                    <View android:layout_width="1dp" android:layout_height="40dp"
+                        android:background="@color/border"/>
+
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                        <TextView android:id="@+id/stat_tabs"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="1" android:textSize="22sp" android:textStyle="bold"
+                            android:textColor="@color/accent"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Open tabs" android:textSize="11sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:gravity="center" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+
+                    <View android:layout_width="1dp" android:layout_height="40dp"
+                        android:background="@color/border"/>
+
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                        <ImageView android:layout_width="22dp" android:layout_height="22dp"
+                            android:src="@drawable/ic_lock" android:tint="@color/accent"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="No history" android:textSize="11sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:gravity="center" android:layout_marginTop="2dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Every refresh wipes all data"
+            android:textSize="11sp"
+            android:textColor="@color/text_hint"
+            android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+</ScrollView>

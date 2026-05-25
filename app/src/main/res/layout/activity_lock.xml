@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lock_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="40dp"
+    android:background="?android:attr/windowBackground">
+
+    <ImageView
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CBrowser"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="?android:attr/textColorPrimary"
+        android:layout_marginBottom="6dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter password to continue"
+        android:textSize="14sp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:layout_marginBottom="32dp"/>
+
+    <EditText
+        android:id="@+id/lock_input"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:inputType="textPassword"
+        android:imeOptions="actionDone"
+        android:maxLength="36"
+        android:background="@drawable/bg_input_rounded"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textSize="18sp"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textCursorDrawable="@null"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/lock_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="#F44336"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/lock_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Unlock"
+        android:textSize="15sp"
+        android:background="@color/accent"
+        android:textColor="@color/white"/>
+
+</LinearLayout>

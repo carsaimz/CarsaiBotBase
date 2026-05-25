@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?android:attr/windowBackground">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"/>
+
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:padding="16dp">
+
+            <!-- THEME -->
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="THEME" android:textSize="11sp" android:textColor="@color/accent"
+                android:textStyle="bold" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"/>
+            <RadioGroup android:id="@+id/radioGroupTheme" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="horizontal">
+                <RadioButton android:id="@+id/radioSystem" android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:layout_weight="1" android:text="System"/>
+                <RadioButton android:id="@+id/radioLight"  android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:layout_weight="1" android:text="Light"/>
+                <RadioButton android:id="@+id/radioDark"   android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:layout_weight="1" android:text="Dark"/>
+            </RadioGroup>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/border" android:layout_marginTop="16dp" android:layout_marginBottom="16dp"/>
+
+            <!-- APP LOCK -->
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="APP LOCK" android:textSize="11sp" android:textColor="@color/accent"
+                android:textStyle="bold" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="52dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Require password on open" android:textSize="14sp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Lock app with a password" android:textSize="12sp"
+                        android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchAppLock"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnChangePassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Change password"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_marginBottom="8dp"/>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/border" android:layout_marginTop="8dp" android:layout_marginBottom="16dp"/>
+
+            <!-- TOOLBAR -->
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="TOOLBAR" android:textSize="11sp" android:textColor="@color/accent"
+                android:textStyle="bold" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"/>
+
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="Position" android:textSize="14sp" android:layout_marginBottom="4dp"/>
+            <RadioGroup android:id="@+id/radioGroupToolbarPos" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="horizontal">
+                <RadioButton android:id="@+id/radioToolbarBottom" android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:layout_weight="1" android:text="Bottom"/>
+                <RadioButton android:id="@+id/radioToolbarTop" android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:layout_weight="1" android:text="Top"/>
+            </RadioGroup>
+
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="Size" android:textSize="14sp"
+                android:layout_marginTop="12dp" android:layout_marginBottom="4dp"/>
+            <RadioGroup android:id="@+id/radioGroupToolbarSize" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="horizontal">
+                <RadioButton android:id="@+id/radioToolbarNormal" android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:layout_weight="1" android:text="Normal"/>
+                <RadioButton android:id="@+id/radioToolbarCompact" android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:layout_weight="1" android:text="Compact"/>
+                <RadioButton android:id="@+id/radioToolbarLarge" android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:layout_weight="1" android:text="Large"/>
+            </RadioGroup>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/border" android:layout_marginTop="16dp" android:layout_marginBottom="16dp"/>
+
+            <!-- SEARCH -->
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="SEARCH" android:textSize="11sp" android:textColor="@color/accent"
+                android:textStyle="bold" android:layout_marginBottom="8dp"/>
+            <Spinner android:id="@+id/spinnerEngine" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:layout_marginBottom="4dp"/>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="52dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Safe search" android:textSize="14sp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Filter adult content in results" android:textSize="12sp"
+                        android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchSafeSearch"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/border" android:layout_marginTop="8dp" android:layout_marginBottom="16dp"/>
+
+            <!-- PRIVACY -->
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="PRIVACY &amp; SECURITY" android:textSize="11sp" android:textColor="@color/accent"
+                android:textStyle="bold" android:layout_marginBottom="8dp"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="52dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Block trackers &amp; ads" android:textSize="14sp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Block known tracking and ad scripts" android:textSize="12sp"
+                        android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchTrackerBlocking"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="52dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Block third-party cookies" android:textSize="14sp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Prevent cross-site tracking" android:textSize="12sp"
+                        android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchBlock3pCookies"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="52dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Fingerprint protection" android:textSize="14sp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Spoof canvas, hardware info, battery API" android:textSize="12sp"
+                        android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchFingerprint"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="52dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Security indicator" android:textSize="14sp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Show HTTPS/HTTP icon in address bar" android:textSize="12sp"
+                        android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchSecIndicator"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="52dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Wipe data when backgrounded" android:textSize="14sp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Clear all data when app leaves foreground" android:textSize="12sp"
+                        android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchWipeOnBg"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/border" android:layout_marginTop="8dp" android:layout_marginBottom="16dp"/>
+
+            <!-- PERFORMANCE -->
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="PERFORMANCE &amp; DATA" android:textSize="11sp" android:textColor="@color/accent"
+                android:textStyle="bold" android:layout_marginBottom="8dp"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="52dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Save data mode" android:textSize="14sp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Use cache aggressively, send Save-Data header" android:textSize="12sp"
+                        android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchSaveData"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="52dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Block web fonts" android:textSize="14sp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Block .woff/.ttf and Google Fonts (saves data)" android:textSize="12sp"
+                        android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchBlockFonts"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="52dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Block images" android:textSize="14sp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Do not load images (maximum data saving)" android:textSize="12sp"
+                        android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchBlockImages"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/border" android:layout_marginTop="8dp" android:layout_marginBottom="16dp"/>
+
+            <!-- BROWSER -->
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="BROWSER" android:textSize="11sp" android:textColor="@color/accent"
+                android:textStyle="bold" android:layout_marginBottom="8dp"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="52dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="JavaScript" android:textSize="14sp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Enable JavaScript (required for most sites)" android:textSize="12sp"
+                        android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchJavascript"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="52dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Desktop mode" android:textSize="14sp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Use desktop user agent" android:textSize="12sp"
+                        android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchDesktopMode"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="52dp"
+                android:orientation="horizontal" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Show tracker count" android:textSize="14sp"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:text="Badge showing blocked trackers in address bar" android:textSize="12sp"
+                        android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+                <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchTrackerCount"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/border" android:layout_marginTop="8dp" android:layout_marginBottom="16dp"/>
+
+            <!-- DATA -->
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="DATA" android:textSize="11sp" android:textColor="@color/accent"
+                android:textStyle="bold" android:layout_marginBottom="8dp"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnClearData"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="Clear all browsing data now"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:textColor="@color/warning"/>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp"
+                android:background="@color/border" android:layout_marginTop="16dp" android:layout_marginBottom="16dp"/>
+
+            <!-- ABOUT -->
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="ABOUT" android:textSize="11sp" android:textColor="@color/accent"
+                android:textStyle="bold" android:layout_marginBottom="8dp"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="CBrowser v1.0.0" android:textSize="14sp"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="CarsaiDev | CarsaiMz" android:textSize="12sp"
+                android:textColor="@color/text_secondary" android:layout_marginTop="2dp"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:text="Privacy-first browser. No history. No tracking." android:textSize="12sp"
+                android:textColor="@color/text_secondary" android:layout_marginTop="2dp"
+                android:layout_marginBottom="40dp"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

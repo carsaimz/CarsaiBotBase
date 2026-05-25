@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CBrowser</string>
+    <string name="search_hint">Search or enter address</string>
+    <string name="private_tagline">No traces. No tracking.</string>
+    <string name="credits">CarsaiDev | CarsaiMz</string>
+    <string name="clearing">Clearing data…</string>
+</resources>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Root is a FrameLayout so we can position nav_bar at top OR bottom dynamically -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/windowBackground">
+
+    <!-- WebView area — padding applied programmatically based on toolbar position/size -->
+    <LinearLayout
+        android:id="@+id/browser_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Find in page bar -->
+        <include android:id="@+id/find_bar" layout="@layout/sheet_find"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:progressTint="@color/accent"
+            android:progressBackgroundTint="?android:attr/windowBackground"
+            android:max="100"
+            android:visibility="gone"/>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/web_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </LinearLayout>
+
+    <!-- Nav bar — positioned at top or bottom via layout_gravity, changed at runtime -->
+    <LinearLayout
+        android:id="@+id/nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:background="?android:attr/windowBackground"
+        android:elevation="8dp">
+
+        <View android:id="@+id/nav_divider"
+            android:layout_width="match_parent" android:layout_height="1dp"
+            android:background="@color/border"/>
+
+        <!-- Toolbar row — height controlled programmatically based on size setting -->
+        <LinearLayout
+            android:id="@+id/toolbar_row"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageButton android:id="@+id/btn_back"
+                android:layout_width="0dp" android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_arrow_back"
+                android:tint="?android:attr/textColorSecondary"
+                android:contentDescription="Back"/>
+
+            <ImageButton android:id="@+id/btn_forward"
+                android:layout_width="0dp" android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_arrow_forward"
+                android:tint="?android:attr/textColorSecondary"
+                android:contentDescription="Forward"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/url_card"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_weight="3"
+                app:cardBackgroundColor="@color/bg_input"
+                app:cardCornerRadius="19dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/border"
+                app:strokeWidth="1dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp">
+                    <ImageView android:id="@+id/ic_secure"
+                        android:layout_width="12dp" android:layout_height="12dp"
+                        android:src="@drawable/ic_lock" android:layout_marginEnd="5dp"/>
+                    <TextView android:id="@+id/txt_url"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="12sp"
+                        android:singleLine="true" android:ellipsize="middle"
+                        android:hint="@string/search_hint"
+                        android:textColorHint="@color/text_hint"/>
+                    <TextView android:id="@+id/txt_trackers"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="0" android:textSize="10sp" android:textColor="@color/accent"
+                        android:background="@drawable/bg_badge"
+                        android:paddingStart="4dp" android:paddingEnd="4dp"
+                        android:visibility="gone" android:layout_marginStart="4dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <ImageButton android:id="@+id/btn_refresh"
+                android:layout_width="0dp" android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_refresh"
+                android:tint="?android:attr/textColorPrimary"
+                android:contentDescription="Refresh"/>
+
+            <FrameLayout android:id="@+id/btn_tabs"
+                android:layout_width="0dp" android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="22dp" android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    app:cardBackgroundColor="?android:attr/windowBackground"
+                    app:cardCornerRadius="4dp"
+                    app:strokeColor="?android:attr/textColorPrimary"
+                    app:strokeWidth="2dp"
+                    app:cardElevation="0dp">
+                    <TextView android:id="@+id/txt_tab_count"
+                        android:layout_width="match_parent" android:layout_height="match_parent"
+                        android:text="1"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="11sp" android:textStyle="bold"
+                        android:gravity="center"/>
+                </com.google.android.material.card.MaterialCardView>
+            </FrameLayout>
+
+            <ImageButton android:id="@+id/btn_more"
+                android:layout_width="0dp" android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_more"
+                android:tint="?android:attr/textColorSecondary"
+                android:contentDescription="More options"/>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

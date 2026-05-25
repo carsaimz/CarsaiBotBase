@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="8dp"
+    android:background="?android:attr/windowBackground">
+
+    <EditText
+        android:id="@+id/find_input"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_weight="1"
+        android:background="@color/bg_input"
+        android:hint="Find in page…"
+        android:textColorHint="@color/text_hint"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="14sp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:singleLine="true"
+        android:imeOptions="actionSearch"
+        android:inputType="text"/>
+
+    <TextView
+        android:id="@+id/find_matches"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0/0"
+        android:textSize="12sp"
+        android:textColor="@color/text_secondary"
+        android:paddingStart="8dp"
+        android:paddingEnd="4dp"/>
+
+    <ImageButton
+        android:id="@+id/find_prev"
+        android:layout_width="40dp" android:layout_height="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_arrow_back"
+        android:tint="@color/accent"
+        android:contentDescription="Previous"/>
+
+    <ImageButton
+        android:id="@+id/find_next"
+        android:layout_width="40dp" android:layout_height="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_arrow_forward"
+        android:tint="@color/accent"
+        android:contentDescription="Next"/>
+
+    <ImageButton
+        android:id="@+id/find_close"
+        android:layout_width="40dp" android:layout_height="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_close"
+        android:tint="@color/text_secondary"
+        android:contentDescription="Close"/>
+</LinearLayout>
